@@ -5,6 +5,7 @@ import Input from "./Input";
 
 
 const List = (props) => {
+    
 
     let arr_1 = [...props.table].map(item => item.title[0]).filter((item, index) => {
         return [...props.table].map(item => item.title[0]).indexOf(item) === index
@@ -18,6 +19,8 @@ const List = (props) => {
         setvalue(item)
         props.getvalue(item)
     }
+
+    if (props.clear=== true) value.title=""
 
     const [filter, setFilter] = useState({ query: '' })
 
@@ -36,7 +39,9 @@ const List = (props) => {
                 />
             </div>
             <div>
-                <select  onChange={e => setselectgroup(e.target.value)}>{arr_1.map((item) =>
+                <select onChange={e => setselectgroup(e.target.value)}>
+                <option value="">Выберите группировку</option>
+                    {arr_1.map((item) =>                    
                     <option value={item}>{item}</option>
                 )}</select>
 

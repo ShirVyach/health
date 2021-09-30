@@ -8,6 +8,8 @@ const NewList = (props) => {
 
     const [value, setvalue] = useState([])
 
+
+
     const getvalue = (item) => {
         setvalue([...value, item.title])
         props.getvalue(item)
@@ -17,6 +19,8 @@ const NewList = (props) => {
         setvalue(value.filter(i => i !== item.title))
         props.removevalue(item)
     }
+    
+    if (props.clear=== true) value.splice(0)
 
     const [filter, setFilter] = useState({ query: '' })
 
@@ -35,7 +39,7 @@ const NewList = (props) => {
             </div>
             <div>
                 {SearchTable.map((item) =>
-                    <NewItem item={item} refund={getvalue} remove={removevalue} />
+                    <NewItem item={item} refund={getvalue} remove={removevalue} clear={props.clear}/>
                 )}
             </div>
         </div>
