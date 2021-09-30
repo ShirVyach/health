@@ -6,6 +6,11 @@ import Input from "./Input";
 
 const List = (props) => {
 
+    let arr_1 = [...props.table].map(item => item.title[0]).filter((item, index) => {
+        return [...props.table].map(item => item.title[0]).indexOf(item) === index
+    });
+
+    const [selectgroup, setselectgroup] = useState ()
 
     const [value, setvalue] = useState([])
 
@@ -17,8 +22,8 @@ const List = (props) => {
     const [filter, setFilter] = useState({ query: '' })
 
     const SearchTable = useMemo(() => {
-        return [...props.table].filter(dis => dis.title.toLowerCase().includes(filter.query.toLowerCase()))
-    }, [filter.query, props.table])
+        return [...props.table].filter(dis => dis.title.toLowerCase().includes(filter.query.toLowerCase())).filter(i => i.title[0] === selectgroup)
+    }, [filter.query, selectgroup, props.table])
 
     return (
         <div>
@@ -31,6 +36,10 @@ const List = (props) => {
                 />
             </div>
             <div>
+                <select  onChange={e => setselectgroup(e.target.value)}>{arr_1.map((item) =>
+                    <option value={item}>{item}</option>
+                )}</select>
+
                 {SearchTable.map((item) =>
                     <Item item={item} refund={getvalue} />
                 )}
