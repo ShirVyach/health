@@ -34,41 +34,46 @@ function App() {
   async function Send_disease_drug() {
     await axios.post(
       apiUrl + "/disease/create-link-drug/",
-      ({ id, id1 }),
+      ({ diseaseId: id, drugsId: id1 }),
       auth
     )
+    cleartable()
   }
 
   async function Send_disease_specialization() {
     await axios.post(
       apiUrl + "/disease/create-link-specialization/",
-      ({ id, id1 }),
+      ({ diseaseId: id, specializationsId: id1 }),
       auth
     )
+    cleartable()
   }
 
   async function Send_specialization_organ() {
     await axios.post(
       apiUrl + "/specialization/create-link-organ/",
-      ({ id, id1 }),
+      ({ specializationsId: id, organsId: id1 }),
       auth
     )
+    cleartable()
   }
 
   async function Send_dis_sym_org() {
     await axios.post(
       apiUrl + "/dis-sym-org/create",
-      ({ id, idsym, idorg }),
+      ({ diseaseId: id, symptomId: idsym, organsId: idorg }),
       auth
     )
+    cleartable()
   }
 
   async function Send_disease_medical_action() {
     await axios.post(
       apiUrl + "/disease/create-link-mediacal_action/",
-      ({ id, id1 }),
+      ({ diseaseId: id, MedicalActionsId: id1 }),
       auth
     )
+    cleartable()
   }
 
   const [disease, setdisease] = useState([])
@@ -100,6 +105,17 @@ function App() {
     setidorg(undefined)
     id1.splice(0)
   }
+  
+  const [ cl, setcl ]= useState (false)
+
+  function cleartable(){
+    setcl(true)
+    setid(undefined)
+    setidsym(undefined)
+    setidorg(undefined)
+    id1.splice(0)
+    setcl(false)
+  }
 
 
   const getvalue = (item) => {
@@ -119,8 +135,8 @@ function App() {
       <Select table={relationships} defaultValue={"Выберите связь таблиц"} value={selectedrel} onChange={linktable} />
       {selectedrel === '0'
         ? <div className="list">
-          <List table={disease} getvalue={getvalue} />
-          <NewList table={drug} getvalue={getvalue1} removevalue={removevalue1} />
+          <List table={disease} getvalue={getvalue} clear={cl} />
+          <NewList table={drug} getvalue={getvalue1} removevalue={removevalue1} clear={cl} />
           <button className="button-rel" onClick={Send_disease_drug}>Связать</button>
         </div>
         : <div></div>
@@ -128,8 +144,8 @@ function App() {
 
       {selectedrel === '1'
         ? <div className="list">
-          <List table={disease} getvalue={getvalue} />
-          <NewList table={specialization} getvalue={getvalue1} removevalue={removevalue1} />
+          <List table={disease} getvalue={getvalue} clear={cl}/>
+          <NewList table={specialization} getvalue={getvalue1} removevalue={removevalue1} clear={cl}/>
           <button className="button-rel" onClick={Send_disease_specialization}>Связать</button>
         </div>
         : <div></div>
@@ -137,8 +153,8 @@ function App() {
 
       {selectedrel === '2'
         ? <div className="list">
-          <List table={specialization} getvalue={getvalue} />
-          <NewList table={organ} getvalue={getvalue1} removevalue={removevalue1} />
+          <List table={specialization} getvalue={getvalue} clear={cl}/>
+          <NewList table={organ} getvalue={getvalue1} removevalue={removevalue1} clear={cl}/>
           <button className="button-rel" onClick={Send_specialization_organ}>Связать</button>
         </div>
         : <div></div>
@@ -146,9 +162,9 @@ function App() {
 
       {selectedrel === '3'
         ? <div className="list">
-          <List table={disease} getvalue={getvalue} />
-          <List table={symptom} getvalue={setidsym} />
-          <List table={organ} getvalue={setidorg} />
+          <List table={disease} getvalue={getvalue} clear={cl}/>
+          <List table={symptom} getvalue={setidsym} clear={cl}/>
+          <List table={organ} getvalue={setidorg} clear={cl}/>
           <button className="button-rel" onClick={Send_dis_sym_org}>Связать</button>
         </div>
         : <div></div>
@@ -156,8 +172,8 @@ function App() {
 
       {selectedrel === '4'
         ? <div className="list">
-          <List table={disease} getvalue={getvalue} />
-          <NewList table={medact} getvalue={getvalue1} removevalue={removevalue1} />
+          <List table={disease} getvalue={getvalue} clear={cl}/>
+          <NewList table={medact} getvalue={getvalue1} removevalue={removevalue1} clear={cl}/>
           <button className="button-rel" onClick={Send_disease_medical_action}>Связать</button>
         </div>
         : <div></div>
