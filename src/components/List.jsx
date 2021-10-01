@@ -16,11 +16,11 @@ const List = (props) => {
     const [value, setvalue] = useState([])
 
     const getvalue = (item) => {
-        setvalue(item)
+        setvalue([value, item.title])
         props.getvalue(item)
     }
 
-    if (props.clear=== true) value.title=""
+    if (props.clear=== true) value.splice(0)
 
     const [filter, setFilter] = useState({ query: '' })
 
@@ -30,7 +30,7 @@ const List = (props) => {
 
     return (
         <div>
-            <strong className="item">{value.title}</strong>
+            <strong className="item">{value[1]}</strong>
             <div>
                 <Input className="item"
                     value={filter.query}
