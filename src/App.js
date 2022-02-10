@@ -9,8 +9,8 @@ function App() {
 
   const apiUrl = "/api"
   const auth = {
-    username: "tester",
-    password: "test123"
+    username: "*****",
+    password: "*****"
   }
 
   async function fetchData() {
